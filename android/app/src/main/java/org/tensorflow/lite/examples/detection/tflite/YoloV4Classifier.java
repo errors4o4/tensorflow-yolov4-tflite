@@ -27,6 +27,7 @@ import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -387,6 +388,11 @@ public class YoloV4Classifier implements Classifier {
         outputMap.put(0, new float[1][OUTPUT_WIDTH_FULL[0]][4]);
         outputMap.put(1, new float[1][OUTPUT_WIDTH_FULL[1]][labels.size()]);
         Object[] inputArray = {byteBuffer};
+        Log.i("TAG", "tfLite.getInputTensorCount(): " + tfLite.getInputTensorCount());
+        for(int i = 0; i < tfLite.getInputTensorCount(); ++i) {
+            Log.i("TAG", "Tensor " + i + ":");
+            Log.i("TAG", "Input shape: " + Arrays.toString(tfLite.getInputTensor(i).shape()));
+        }
         tfLite.runForMultipleInputsOutputs(inputArray, outputMap);
 
         int gridWidth = OUTPUT_WIDTH_FULL[0];
@@ -429,6 +435,14 @@ public class YoloV4Classifier implements Classifier {
         outputMap.put(0, new float[1][OUTPUT_WIDTH_TINY[0]][4]);
         outputMap.put(1, new float[1][OUTPUT_WIDTH_TINY[1]][labels.size()]);
         Object[] inputArray = {byteBuffer};
+//        Log.i("TAG", "tfLite.getInputTensorCount(): " + tfLite.getInputTensorCount());
+//        for(int i = 0; i < tfLite.getInputTensorCount(); ++i) {
+//            Log.i("TAG", "Tensor " + i + ":");
+//            Log.i("TAG", "Input shape: " + Arrays.toString(tfLite.getInputTensor(i).shape()));
+//        }
+        Log.i("TAG", "Input shape: " + Arrays.toString(tfLite.getInputTensor(0).shape()));
+        Log.i("TAG", "Input shape: " + Arrays.toString(tfLite.getInputTensor(0).shape()));
+
         tfLite.runForMultipleInputsOutputs(inputArray, outputMap);
 
         int gridWidth = OUTPUT_WIDTH_TINY[0];
@@ -466,6 +480,8 @@ public class YoloV4Classifier implements Classifier {
     }
 
     public ArrayList<Recognition> recognizeImage(Bitmap bitmap) {
+        Log.i("TAG", "bitmap.getWidth(): " + bitmap.getWidth());
+        Log.i("TAG", "bitmap.getHeight(): " + bitmap.getHeight());
         ByteBuffer byteBuffer = convertBitmapToByteBuffer(bitmap);
 
 //        Map<Integer, Object> outputMap = new HashMap<>();
