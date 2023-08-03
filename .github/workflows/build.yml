@@ -18,20 +18,24 @@ jobs:
           distribution: 'temurin'
           cache: 'gradle'
 
+      - name: Switch to Android project dir
+        run: |
+          cd android
+
       - name: Run basic tests
         run: |
           chmod +x ./gradlew
-          ./android/gradlew test
+          ./gradlew test
 
       - name: Build apk
         run: |
-          ./android/gradlew assembleDebug
+          ./gradlew assembleDebug
           mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/rashipay.apk
 
       - uses: actions/upload-artifact@v3
         with:
           name: rashipay.apk
-          path: ./android/app/build/outputs/apk/rashipay.apk
+          path: ./app/build/outputs/apk/rashipay.apk
 
       - name: Clear generated signing key
         run: |
