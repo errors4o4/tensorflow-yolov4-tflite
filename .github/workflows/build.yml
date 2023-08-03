@@ -26,7 +26,7 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: rashipay.apk
+          name: objdetect.apk
           path: ./android/app/build/outputs/apk/objdetect.apk
 
       - name: Clear generated signing key
