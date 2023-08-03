@@ -22,7 +22,7 @@ jobs:
         run: |
           cd android
           ./gradlew assembleDebug
-          mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/rashipay.apk
+          mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/objdetect.apk
 
       - uses: actions/upload-artifact@v3
         with:
